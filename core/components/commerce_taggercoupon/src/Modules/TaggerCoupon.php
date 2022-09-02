@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace PoconoSewVac\TaggerCoupon\Modules;
 
 use modmore\Commerce\Admin\Configuration\About\ComposerPackages;
@@ -33,6 +36,9 @@ class TaggerCoupon extends BaseModule {
     {
         // Load our lexicon
         $this->adapter->loadLexicon('commerce_taggercoupon:default');
+
+        // Workaround for Exception: Class "comCoupon" not found in admin?
+        $this->adapter->loadClass('comCoupon');
 
         // Add the xPDO package, so Commerce can detect the derivative classes
         $root = dirname(__DIR__, 2);

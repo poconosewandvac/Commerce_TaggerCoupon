@@ -1,4 +1,5 @@
 <?php
+require_once strtr(realpath(dirname(dirname(__FILE__))), '\\', '/') . '/taggercoupon.class.php';
 /**
  * Tagger Coupon for Commerce.
  *
@@ -9,20 +10,7 @@
  * @package commerce_taggercoupon
  * @license See core/components/commerce_taggercoupon/docs/license.txt
  */
+class TaggerCoupon_mysql extends TaggerCoupon
+{
 
-$xpdo_meta_map['TaggerDiscount']= array (
-  'package' => 'commerce_taggercoupon',
-  'version' => '1.1',
-  'extends' => 'comDiscount',
-  'inherit' => 'single',
-  'tableMeta' => 
-  array (
-    'engine' => 'InnoDB',
-  ),
-  'fields' => 
-  array (
-  ),
-  'fieldMeta' => 
-  array (
-  ),
-);
+}

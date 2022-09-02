@@ -16,7 +16,7 @@ class Update extends Page
     public function setUp()
     {
         $objectId = (int) $this->getOption('id', 0);
-        $exists = $this->adapter->getCount('TaggerDiscount', ['id' => $objectId, 'removed' => false]);
+        $exists = $this->adapter->getCount('TaggerCoupon', ['id' => $objectId, 'removed' => false]);
 
         if ($exists) {
             $section = new SimpleSection($this->commerce, [

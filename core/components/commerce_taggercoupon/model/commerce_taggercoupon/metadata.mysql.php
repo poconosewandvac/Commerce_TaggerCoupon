@@ -1,8 +1,8 @@
 <?php
 
 $xpdo_meta_map = array (
-  'comDiscount' => 
+  'comCoupon' => 
   array (
-    0 => 'TaggerDiscount',
+    0 => 'TaggerCoupon',
   ),
 );

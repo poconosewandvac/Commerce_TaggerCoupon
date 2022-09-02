@@ -26,7 +26,7 @@ class Delete extends Page
             ]);
 
             $widget->setRecord($object);
-            $widget->setClassKey('TaggerDiscount');
+            $widget->setClassKey('TaggerCoupon');
             $widget->setFormAction($this->adapter->makeAdminUrl('discounts/tagger_coupons/delete', ['id' => $object->get('id')]));
             $widget->setUp();
             $section->addWidget($widget);

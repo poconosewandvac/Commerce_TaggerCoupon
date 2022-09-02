@@ -9,7 +9,7 @@ use modmore\Commerce\Admin\Sections\SimpleSection;
 
 class Active extends Page
 {
-    protected $classKey = 'TaggerDiscount';
+    protected $classKey = 'TaggerCoupon';
     public $key = 'discounts/tagger_coupons';
     public $title = 'commerce_taggercoupon.tagger_coupons';
     public static $permissions = ['commerce', 'commerce_discounts'];
