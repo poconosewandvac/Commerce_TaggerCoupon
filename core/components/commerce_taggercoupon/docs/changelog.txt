@@ -1,0 +1,5 @@
+Taggercoupon for Commerce 1.2.0-pl
+---------------------------------
+Released on 9/2/2022
+
+- First release
