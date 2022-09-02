@@ -15,7 +15,7 @@ use modmore\Commerce\Admin\Widgets\Form\TextField;
 use modmore\Commerce\Admin\Widgets\Form\Validation\Required;
 use modmore\Commerce\Admin\Widgets\Form\Validation\Length;
 
-class Form extends \modmore\Commerce\Admin\Modules\Discounts\Form
+class Form extends \modmore\Commerce\Admin\Modules\Coupons\Form
 {
     protected $targetClassKey = 'comProduct';
     protected $targetClassField = 'name';
@@ -24,99 +24,6 @@ class Form extends \modmore\Commerce\Admin\Modules\Discounts\Form
 
     public function getFields(array $options = array())
     {
-        /*$fields = [];
-
-        $fields[] = new HiddenField($this->commerce, [
-            'name' => 'discount_percentage',
-            'value' => '100',
-        ]);
-
-        $fields[] = new SelectMultipleField($this->commerce, [
-            'name' => 'products',
-            'label' => $this->adapter->lexicon('commerce.free_products'),
-            'optionsClass' => 'comProduct',
-            'optionsCondition' => ['removed' => false],
-            'validation' => [
-                new Required(),
-            ],
-        ]);
-
-        $fields[] = new TextField($this->commerce, [
-            'name' => 'note',
-            'label' => $this->adapter->lexicon('commerce.discount_note'),
-        ]);
-
-        $fields[] = new SectionField($this->commerce, [
-            'label' => $this->adapter->lexicon('commerce.availability')
-        ]);
-
-        $fields[] = new CheckboxField($this->commerce, [
-            'name' => 'active',
-            'label' => $this->adapter->lexicon('commerce.active'),
-            'value' => true,
-        ]);
-
-        $fields[] = new SelectMultipleField($this->commerce, [
-            'name' => 'properties[order_excluded_products]',
-            'label' => $this->adapter->lexicon('commerce.module.free_products.order_excluded_products'),
-            'description' => $this->adapter->lexicon('commerce.module.free_products.order_excluded_products.description'),
-            'value' => $this->record->getProperty('order_excluded_products'),
-            'optionsClass' => 'comProduct',
-            'optionsCondition' => ['removed' => false],
-        ]);
-
-        $fields[] = new SelectMultipleField($this->commerce, [
-            'name' => 'properties[order_one_of_products]',
-            'label' => $this->adapter->lexicon('commerce.module.free_products.order_one_of_products'),
-            'description' => $this->adapter->lexicon('commerce.module.free_products.order_one_of_products.description'),
-            'value' => $this->record->getProperty('order_one_of_products'),
-            'optionsClass' => 'comProduct',
-            'optionsCondition' => ['removed' => false],
-        ]);
-
-        $fields[] = new SelectMultipleField($this->commerce, [
-            'name' => 'properties[order_required_products]',
-            'label' => $this->adapter->lexicon('commerce.module.free_products.order_required_products'),
-            'description' => $this->adapter->lexicon('commerce.module.free_products.order_required_products.description'),
-            'value' => $this->record->getProperty('order_required_products'),
-            'optionsClass' => 'comProduct',
-            'optionsCondition' => ['removed' => false],
-        ]);
-
-        $fields[] = new DateTimeField($this->commerce, [
-            'name' => 'available_from',
-            'label' => $this->adapter->lexicon('commerce.available_from'),
-        ]);
-
-        $fields[] = new DateTimeField($this->commerce, [
-            'name' => 'available_until',
-            'label' => $this->adapter->lexicon('commerce.available_until'),
-        ]);
-
-        $fields[] = new NumberField($this->commerce, [
-            'name' => 'minimum_order_total',
-            'label' => $this->adapter->lexicon('commerce.minimum_order_total'),
-            'input_class' => 'commerce-field-currency',
-        ]);
-
-        $fields[] = new NumberField($this->commerce, [
-            'name' => 'maximum_order_total',
-            'label' => $this->adapter->lexicon('commerce.maximum_order_total'),
-            'input_class' => 'commerce-field-currency',
-        ]);
-
-        $fields[] = new NumberField($this->commerce, [
-            'name' => 'minimum_order_items',
-            'label' => $this->adapter->lexicon('commerce.minimum_order_items'),
-        ]);
-
-        $fields[] = new NumberField($this->commerce, [
-            'name' => 'maximum_order_items',
-            'label' => $this->adapter->lexicon('commerce.maximum_order_items'),
-        ]);
-
-        return $fields;*/
-
         $fields = [];
 
         $fields[] = new TextField($this->commerce, [
@@ -162,9 +69,19 @@ class Form extends \modmore\Commerce\Admin\Modules\Discounts\Form
         ]);
         $fields[] = new SelectMultipleField($this->commerce, [
             'name' => 'products',
-            'label' => $this->adapter->lexicon('commerce.products'),
+            'label' => $this->adapter->lexicon('commerce.discount_target.TaggerCoupon'),
+            'options' => $this->getTaggerTags(),
+            'validation' => [
+                new Required(),
+            ],
+        ]);
+
+        $fields[] = new SelectMultipleField($this->commerce, [
+            'name' => 'properties[excluded_products]',
+            'label' => $this->adapter->lexicon('commerce_taggercoupon.excluded_products'),
+            'value' => $this->record->getProperty('excluded_products'),
             'optionsClass' => 'comProduct',
-            'optionsCondition' => ['removed' => false]
+            'optionsCondition' => ['removed' => false],
         ]);
 
         $fields[] = new DateTimeField($this->commerce, [
@@ -200,5 +117,29 @@ class Form extends \modmore\Commerce\Admin\Modules\Discounts\Form
         ]);
 
         return $fields;
+    }
+
+    public function getFormAction(array $options = array())
+    {
+        if ($this->record->get('id')) {
+            return $this->adapter->makeAdminUrl('discounts/tagger_coupons/update', ['id' => $this->record->get('id')]);
+        }
+        return $this->adapter->makeAdminUrl('discounts/tagger_coupons/create');
+    }
+
+    private function getTaggerTags(): array
+    {
+        $tags = $this->adapter->getCollection('TaggerTag');
+
+        $result = [];
+
+        foreach ($tags as $tag) {
+            $result[] = [
+                'label' => $tag->get('label'),
+                'value' => $tag->get('id'),
+            ];
+        }
+
+        return $result;
     }
 }

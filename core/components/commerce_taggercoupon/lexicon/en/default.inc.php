@@ -11,3 +11,5 @@ $_lang['commerce_taggercoupon.update_coupon'] = 'Update Tagger Coupon';
 $_lang['commerce_taggercoupon.add_discount.TaggerDiscount'] = 'Tagger Coupons';
 $_lang['commerce.add_discount.TaggerCoupon'] = 'Add Tagger Coupon';
 $_lang['commerce.discount_target.TaggerCoupon'] = 'Tagger Tags';
+$_lang['commerce_taggercoupon.excluded_products'] = 'Excluded Products';
+

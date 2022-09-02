@@ -15,7 +15,7 @@ class Delete extends Page
     public function setUp()
     {
         $objectId = (int) $this->getOption('id', 0);
-        $object = $this->adapter->getObject('TaggerDiscount', ['id' => $objectId, 'removed' => false]);
+        $object = $this->adapter->getObject('TaggerCoupon', ['id' => $objectId, 'removed' => false]);
 
         $section = new SimpleSection($this->commerce, [
             'title' => $this->title
