@@ -11,7 +11,6 @@
  */
 class TaggerCoupon extends comCoupon
 {
-    public $count = 1;
     public function getProductRestriction()
     {
         // The products here are repurposed tagger tag IDs
