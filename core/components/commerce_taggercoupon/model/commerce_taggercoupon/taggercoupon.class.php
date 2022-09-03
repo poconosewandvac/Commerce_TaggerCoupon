@@ -11,19 +11,37 @@
  */
 class TaggerCoupon extends comCoupon
 {
+    public $count = 1;
     public function getProductRestriction()
     {
         // The products here are repurposed tagger tag IDs
         $tags = $this->get('products');
+        $tags = explode(',', $tags);
+        $tags = array_map('intval', $tags);
+
+        // Exclude products from output
+        $excludedProducts = $this->getProperty('excluded_products') ?? [];
+        $excludedProducts = array_map('intval', $excludedProducts);
 
         if (empty($tags)) {
             return [];
         }
 
-        $products = [];
+        $c = $this->adapter->newQuery('TaggerTagResource');
+        $c->leftJoin('TaggerTag', 'TaggerTag', 'TaggerTagResource.tag = TaggerTag.id');
+        $c->leftJoin('comProduct', 'comProduct', 'comProduct.target = TaggerTagResource.resource');
+        $c->where(['TaggerTag.id:IN' => $tags]);
+        $c->select('comProduct.id');
 
-        $products = explode(',', $products);
-        $products = array_map('intval', $products);
-        return $products;
+        $resources = $this->adapter->getIterator('TaggerTagResource', $c);
+
+        $products = [];
+        foreach ($resources as $resource) {
+            $products[] = $resource->get('id');
+        }
+
+        $res = array_diff($products, $excludedProducts);
+
+        return $res;
     }
 }

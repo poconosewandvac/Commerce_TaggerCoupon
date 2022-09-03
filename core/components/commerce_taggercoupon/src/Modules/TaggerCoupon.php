@@ -38,7 +38,9 @@ class TaggerCoupon extends BaseModule {
         $this->adapter->loadLexicon('commerce_taggercoupon:default');
 
         // Load the tagger package
-        $this->adapter->loadPackage('tagger', $corePath . 'model/tagger/');
+
+        $taggerCorePath = MODX_CORE_PATH . 'components/tagger/model/';
+        $this->adapter->loadPackage('tagger', $taggerCorePath);
 
         // Workaround for Exception: Class "comCoupon" not found in admin?
         $this->adapter->loadClass('comCoupon');
