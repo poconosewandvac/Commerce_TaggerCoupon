@@ -140,7 +140,7 @@ class Grid extends \modmore\Commerce\Admin\Modules\Coupons\Grid
             $item['time_between'] .= ((empty($item['time_between'])) ? 'Until ' : ' until ') . $item['available_until_formatted'];
         }
 
-        $updateUrl = $this->adapter->makeAdminUrl('discounts/coupons/update', ['id' => $item['id']]);
+        $updateUrl = $this->adapter->makeAdminUrl('discounts/tagger_coupons/update', ['id' => $item['id']]);
         $item['code'] = '<a href="' . $updateUrl . '" class="commerce-ajax-modal" data-modal-title="' . $this->adapter->lexicon('commerce.update_coupon') . ': ' . $this->encode($item['code']) . '">' . $this->encode($item['code']) . '</a>';
 
         // Define the actions for the item
