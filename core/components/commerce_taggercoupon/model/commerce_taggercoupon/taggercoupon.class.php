@@ -36,7 +36,7 @@ class TaggerCoupon extends comCoupon
 
         $products = [];
         foreach ($resources as $resource) {
-            $products[] = $resource->get('id');
+            $products[] = (int) $resource->get('id');
         }
 
         $res = array_diff($products, $excludedProducts);
